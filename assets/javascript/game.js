@@ -18,6 +18,9 @@ var guesses = 9;
 // Array of computer choices
 var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
+// Array of user guesses
+var wrongGuessesArray = [];
+
 // Variables to hold references to all html sections game will update
 var winsText = document.getElementById("wins");
 var lossesText = document.getElementById("losses");
@@ -38,19 +41,22 @@ document.onkeyup = function(event) {
         winsText.textContent = "Wins: " + wins;
         guessesText.textContent =  "Guesses left: " + guesses;
         guessesHistory.textContent= "Your Guesses So Far: ";
+        wrongGuessesArray = [];
         var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
  // else if my guess !== computer's guess, I get 8 more guesses then game resets upon win or loss (set counters to 0 0 9, display original HTML)
-    } else if (guesses > 1) {
+    } else if (guesses > 1 && !wrongGuessesArray.includes(userGuess)) {  //first ensure user has not already guessed that incorrect letter
         guesses--;
         guessesText.textContent =  "Guesses left: " + guesses;
         guessesHistoryText.append(" " + userGuess + " ");
+        wrongGuessesArray.push(userGuess);
 // else my guess !=== computer's guess and I have no more guesses, so loss counter increments by 1 and game resets
-    } else {
+    } else if (!wrongGuessesArray.includes(userGuess)) {
         losses++;
         guesses=9;
         lossesText.textContent = "Losses: " + losses;
         guessesText.textContent =  "Guesses left: " + guesses;
         guessesHistory.textContent = "Your Guesses So Far: ";
+        wrongGuessesArray = [];
         var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
     }
 }
