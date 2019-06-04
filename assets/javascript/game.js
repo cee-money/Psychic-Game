@@ -35,10 +35,16 @@ console.log(computerGuess);
 // User keystroke to trigger a win or loss and -1 guesses left until guesses left = 0
 document.onkeyup = function(event) {
     var userGuess = event.key;
-    
+
+// Alert user if their guess was not a letter key, as only those will be valid guesses
+    if (!computerChoices.includes(userGuess)) {
+        alert("Choose letters only!");
+        return;
+    }
+
 // if my guess === computer's guess immediate win, game reset (set counters to 0 0 9, display original HTML, computer to make new guess)
     if (userGuess == computerGuess) { 
-        console.log("entered");
+        // console.log("entered");
         wins++;
         guesses=9;
         winsText.textContent = "Wins: " + wins;
@@ -46,14 +52,14 @@ document.onkeyup = function(event) {
         guessesHistory.textContent= "Your Guesses So Far: ";
         wrongGuessesArray = [];
         computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-        // console.log(computerGuess);
- // else if my guess !== computer's guess, I get 8 more guesses then game resets upon win or loss (set counters to 0 0 9, display original HTML)
-    } else if (guesses > 1 && !wrongGuessesArray.includes(userGuess)) {  //first ensure user has not already guessed that incorrect letter
+        console.log(computerGuess);
+ // else if my guess !== computer's guess, and I have guesses remaining, and my guess has not already been guessed, I get 8 more guesses then game resets upon win or loss (set counters to 0 0 9, display original HTML)
+    } else if (guesses > 1 && !wrongGuessesArray.includes(userGuess)) { 
         guesses--;
         guessesText.textContent =  "Guesses left: " + guesses;
         guessesHistoryText.append(" " + userGuess + " ");
         wrongGuessesArray.push(userGuess);
-// else my guess !=== computer's guess and I have no more guesses, so loss counter increments by 1 and game resets
+// else if my guess !=== computer's guess and I have no more guesses and my guess has not already been guessed, loss counter increments by 1 and game resets
     } else if (!wrongGuessesArray.includes(userGuess)) {
         losses++;
         guesses=9;
