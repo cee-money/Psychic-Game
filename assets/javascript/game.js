@@ -18,7 +18,7 @@ var guesses = 9;
 // Array of computer choices
 var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-// Array of user guesses
+// Array of wrong user guesses
 var wrongGuessesArray = [];
 
 // Variables to hold references to all html sections game will update
@@ -30,19 +30,23 @@ var guessesHistoryText = document.getElementById("guessesHistory");
 
 // Computer chooses letter randomly from computerChoices array
 var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+console.log(computerGuess);
 
 // User keystroke to trigger a win or loss and -1 guesses left until guesses left = 0
 document.onkeyup = function(event) {
     var userGuess = event.key;
+    
 // if my guess === computer's guess immediate win, game reset (set counters to 0 0 9, display original HTML, computer to make new guess)
-    if (userGuess === computerGuess) { 
-        win++;
+    if (userGuess == computerGuess) { 
+        console.log("entered");
+        wins++;
         guesses=9;
         winsText.textContent = "Wins: " + wins;
         guessesText.textContent =  "Guesses left: " + guesses;
         guessesHistory.textContent= "Your Guesses So Far: ";
         wrongGuessesArray = [];
-        var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+        computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+        // console.log(computerGuess);
  // else if my guess !== computer's guess, I get 8 more guesses then game resets upon win or loss (set counters to 0 0 9, display original HTML)
     } else if (guesses > 1 && !wrongGuessesArray.includes(userGuess)) {  //first ensure user has not already guessed that incorrect letter
         guesses--;
@@ -57,7 +61,8 @@ document.onkeyup = function(event) {
         guessesText.textContent =  "Guesses left: " + guesses;
         guessesHistory.textContent = "Your Guesses So Far: ";
         wrongGuessesArray = [];
-        var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+        computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+        // console.log(computerGuess);
     }
 }
 
